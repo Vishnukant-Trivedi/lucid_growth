@@ -13,8 +13,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const common_routes_1 = require("./routes/common_routes");
-const contact_routes_1 = require("./routes/contact_routes");
 const mongoose_1 = __importDefault(require("mongoose"));
 const express_session_1 = __importDefault(require("express-session"));
 const axios_1 = __importDefault(require("axios"));
@@ -22,8 +20,6 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 let channelSettingsData;
 let token;
-const test_routes = new contact_routes_1.ContactRoutes();
-const common_route = new common_routes_1.CommonRoutes();
 const mongoUrl = 'mongodb+srv://vishnutrd11:qgZvua2xZigWKkcS@cluster0.lrkquyr.mongodb.net/Lucid_db?retryWrites=true&w=majority&appName=Cluster0';
 mongoose_1.default.connect(mongoUrl);
 const app = (0, express_1.default)();
@@ -113,8 +109,6 @@ app.post('/message', (req, res) => __awaiter(void 0, void 0, void 0, function* (
         return res.status(500).send(messageResponse.data.error);
     }
 }));
-test_routes.route(app);
-common_route.route(app);
 app.listen(1234, () => {
     console.log('The application is listening on port 1234!');
 });

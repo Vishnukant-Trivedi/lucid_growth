@@ -1,16 +1,13 @@
 import express from 'express';
-import { CommonRoutes } from './routes/common_routes';
-import { ContactRoutes } from './routes/contact_routes';
 import mongoose from 'mongoose';
 import session from 'express-session';
 import axios from 'axios';
 import dotenv from "dotenv";
+import { Request, Response } from 'express';
 dotenv.config();
 
 let channelSettingsData:any[];
 let token:string;
-const test_routes: ContactRoutes = new ContactRoutes();
-const common_route: CommonRoutes = new CommonRoutes();
 const mongoUrl = 'mongodb+srv://vishnutrd11:qgZvua2xZigWKkcS@cluster0.lrkquyr.mongodb.net/Lucid_db?retryWrites=true&w=majority&appName=Cluster0'
 mongoose.connect(mongoUrl);
 const app = express();
@@ -32,7 +29,7 @@ app.use(
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
   // Redirect user to Slack's OAuth authorization page
-app.get("/auth/slack", (req, res) => {
+app.get("/auth/slack", (req: Request, res: Response) => {
     const scopes = "channels:read";
     return res.redirect(
       `https://slack.com/oauth/v2/authorize?client_id=${
@@ -43,7 +40,7 @@ app.get("/auth/slack", (req, res) => {
     );
   });
 
-  app.get("/auth/slack/callback", async (req, res) => {
+  app.get("/auth/slack/callback", async (req: Request, res: Response) => {
     const { code } = req.query;
     try {
       const tokenResponse = await axios.post(
@@ -108,17 +105,17 @@ app.get("/auth/slack", (req, res) => {
         );
     }
   });
-app.get('/channel-list', async (req, res) => {
+app.get('/channel-list', async (req: Request, res: Response) => {
   
   return res.send(channelSettingsData);
 });
 
-app.get('/', async (req, res) => {
+app.get('/', async (req: Request, res: Response) => {
   
   return res.send('Express Typescript on Vercel')
 });
 
-app.post('/message', async (req, res) => {
+app.post('/message', async (req: Request, res: Response) => {
   const apiUrl = "https://slack.com/api/chat.postMessage";
   const headers = {
     Authorization: `Bearer ${token}`
@@ -136,8 +133,6 @@ app.post('/message', async (req, res) => {
   }
 
 });
-test_routes.route(app);
-common_route.route(app);
 app.listen(1234, () => {
     console.log('The application is listening on port 1234!');
 })
