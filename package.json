@@ -14,7 +14,7 @@
     "ts.check",
     "build",
     "add-build"
-],
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {

@@ -17,6 +17,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const express_session_1 = __importDefault(require("express-session"));
 const axios_1 = __importDefault(require("axios"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const body_parser_1 = __importDefault(require("body-parser"));
 dotenv_1.default.config();
 let channelSettingsData;
 let token;
@@ -29,8 +30,8 @@ app.use((0, express_session_1.default)({
     saveUninitialized: true,
     cookie: { secure: "auto" },
 }));
-app.use(express_1.default.urlencoded({ extended: false }));
-app.use(express_1.default.json());
+app.use(body_parser_1.default.json());
+app.use(body_parser_1.default.urlencoded({ extended: true }));
 // Redirect user to Slack's OAuth authorization page
 app.get("/auth/slack", (req, res) => {
     const scopes = "channels:read";

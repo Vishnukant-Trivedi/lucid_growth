@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import session from 'express-session';
 import axios from 'axios';
 import dotenv from "dotenv";
+import bodyParser from 'body-parser';
 import { Request, Response } from 'express';
 dotenv.config();
 
@@ -26,8 +27,8 @@ app.use(
       cookie: { secure: "auto" },
     }),
 );
-app.use(express.urlencoded({extended:false}));
-app.use(express.json());
+app.use(bodyParser.json()); 
+app.use(bodyParser.urlencoded({ extended: true }));
   // Redirect user to Slack's OAuth authorization page
 app.get("/auth/slack", (req: Request, res: Response) => {
     const scopes = "channels:read";
