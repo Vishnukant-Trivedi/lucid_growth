@@ -141,3 +141,5 @@ common_route.route(app);
 app.listen(1234, () => {
     console.log('The application is listening on port 1234!');
 })
+
+export default app;
