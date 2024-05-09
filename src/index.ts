@@ -3,7 +3,6 @@ import { CommonRoutes } from './routes/common_routes';
 import { ContactRoutes } from './routes/contact_routes';
 import mongoose from 'mongoose';
 import session from 'express-session';
-import cors from 'cors';
 import axios from 'axios';
 import dotenv from "dotenv";
 dotenv.config();
@@ -15,9 +14,6 @@ const common_route: CommonRoutes = new CommonRoutes();
 const mongoUrl = 'mongodb+srv://vishnutrd11:qgZvua2xZigWKkcS@cluster0.lrkquyr.mongodb.net/Lucid_db?retryWrites=true&w=majority&appName=Cluster0'
 mongoose.connect(mongoUrl);
 const app = express();
-app.use(cors({
-  origin: 'http://localhost:3001',
-}));
 declare module 'express-session' {
     interface SessionData {
       slack_access_token?: string;
@@ -87,7 +83,6 @@ app.get("/auth/slack", (req, res) => {
               id: channel.id,
               name: channel.name
           }));
-            console.log(channelSettingsData);
             
           res.send(
             `Authorization successful! Here are your channels: ${channels}.<form action="https://slack-notification-six.vercel.app/settings" method="get">
@@ -114,13 +109,11 @@ app.get("/auth/slack", (req, res) => {
     }
   });
 app.get('/channel-list', async (req, res) => {
-  console.log(channelSettingsData);
   
   res.send(channelSettingsData);
 });
 
-app.get('/success', async (req, res) => {
-  console.log(channelSettingsData);
+app.get('/', async (req, res) => {
   
   res.send("Success");
 });
@@ -135,8 +128,6 @@ app.post('/message', async (req, res) => {
     {
     headers: { Authorization: `Bearer ${token}` },
   });
-  
-  console.log(messageResponse);
   
   if(messageResponse.data.ok){
     res.send('Notification send! Please check');

@@ -17,7 +17,6 @@ const common_routes_1 = require("./routes/common_routes");
 const contact_routes_1 = require("./routes/contact_routes");
 const mongoose_1 = __importDefault(require("mongoose"));
 const express_session_1 = __importDefault(require("express-session"));
-const cors_1 = __importDefault(require("cors"));
 const axios_1 = __importDefault(require("axios"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
@@ -28,9 +27,6 @@ const common_route = new common_routes_1.CommonRoutes();
 const mongoUrl = 'mongodb+srv://vishnutrd11:qgZvua2xZigWKkcS@cluster0.lrkquyr.mongodb.net/Lucid_db?retryWrites=true&w=majority&appName=Cluster0';
 mongoose_1.default.connect(mongoUrl);
 const app = (0, express_1.default)();
-app.use((0, cors_1.default)({
-    origin: 'http://localhost:3001',
-}));
 app.use((0, express_session_1.default)({
     secret: process.env.SESSION_SECRET || 'default-secret',
     resave: false,
@@ -73,7 +69,6 @@ app.get("/auth/slack/callback", (req, res) => __awaiter(void 0, void 0, void 0, 
                     id: channel.id,
                     name: channel.name
                 }));
-                console.log(channelSettingsData);
                 res.send(`Authorization successful! Here are your channels: ${channels}.<form action="https://slack-notification-six.vercel.app/settings" method="get">
             <button type="submit">Let's Go!</button>
           </form>`);
@@ -98,11 +93,9 @@ app.get("/auth/slack/callback", (req, res) => __awaiter(void 0, void 0, void 0, 
     }
 }));
 app.get('/channel-list', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(channelSettingsData);
     res.send(channelSettingsData);
 }));
-app.get('/success', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(channelSettingsData);
+app.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.send("Success");
 }));
 app.post('/message', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -113,7 +106,6 @@ app.post('/message', (req, res) => __awaiter(void 0, void 0, void 0, function* (
     const messageResponse = yield axios_1.default.post(apiUrl, req.body, {
         headers: { Authorization: `Bearer ${token}` },
     });
-    console.log(messageResponse);
     if (messageResponse.data.ok) {
         res.send('Notification send! Please check');
     }
