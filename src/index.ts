@@ -34,7 +34,7 @@ app.use(express.json());
   // Redirect user to Slack's OAuth authorization page
 app.get("/auth/slack", (req, res) => {
     const scopes = "channels:read";
-    res.redirect(
+    return res.redirect(
       `https://slack.com/oauth/v2/authorize?client_id=${
         process.env.SLACK_CLIENT_ID
       }&user_scope=${encodeURIComponent(
@@ -84,24 +84,24 @@ app.get("/auth/slack", (req, res) => {
               name: channel.name
           }));
             
-          res.send(
+          return res.send(
             `Authorization successful! Here are your channels: ${channels}.<form action="https://slack-notification-six.vercel.app/settings" method="get">
             <button type="submit">Let's Go!</button>
           </form>`,
           );
         } else {
-          res
+          return res
             .status(500)
             .send("Error fetching channels: " + channelsResponse.data.error);
         }
       } else {
-        res
+         return res
           .status(500)
           .send("Error authorizing with Slack: " + tokenResponse.data.error);
       }
     } catch (error) {
       console.error(error);
-      res
+      return res
         .status(500)
         .send(
           "Server error when exchanging code for token or fetching channels.",
@@ -110,12 +110,12 @@ app.get("/auth/slack", (req, res) => {
   });
 app.get('/channel-list', async (req, res) => {
   
-  res.send(channelSettingsData);
+  return res.send(channelSettingsData);
 });
 
 app.get('/', async (req, res) => {
   
-  res.send("Success");
+  return res.send('Express Typescript on Vercel')
 });
 
 app.post('/message', async (req, res) => {
@@ -130,9 +130,9 @@ app.post('/message', async (req, res) => {
   });
   
   if(messageResponse.data.ok){
-    res.send('Notification send! Please check');
+     return res.send('Notification send! Please check');
   } else {
-    res.status(500).send(messageResponse.data.error);
+    return res.status(500).send(messageResponse.data.error);
   }
 
 });

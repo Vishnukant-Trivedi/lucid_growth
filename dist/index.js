@@ -38,7 +38,7 @@ app.use(express_1.default.json());
 // Redirect user to Slack's OAuth authorization page
 app.get("/auth/slack", (req, res) => {
     const scopes = "channels:read";
-    res.redirect(`https://slack.com/oauth/v2/authorize?client_id=${process.env.SLACK_CLIENT_ID}&user_scope=${encodeURIComponent(scopes)}&redirect_uri=${encodeURIComponent(process.env.SLACK_REDIRECT_URI || 'default-secret')}`);
+    return res.redirect(`https://slack.com/oauth/v2/authorize?client_id=${process.env.SLACK_CLIENT_ID}&user_scope=${encodeURIComponent(scopes)}&redirect_uri=${encodeURIComponent(process.env.SLACK_REDIRECT_URI || 'default-secret')}`);
 });
 app.get("/auth/slack/callback", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { code } = req.query;
@@ -69,7 +69,7 @@ app.get("/auth/slack/callback", (req, res) => __awaiter(void 0, void 0, void 0, 
                     id: channel.id,
                     name: channel.name
                 }));
-                res.send(`Authorization successful! Here are your channels: ${channels}.<form action="https://slack-notification-six.vercel.app/settings" method="get">
+                return res.send(`Authorization successful! Here are your channels: ${channels}.<form action="https://slack-notification-six.vercel.app/settings" method="get">
             <button type="submit">Let's Go!</button>
           </form>`);
             }
@@ -93,10 +93,10 @@ app.get("/auth/slack/callback", (req, res) => __awaiter(void 0, void 0, void 0, 
     }
 }));
 app.get('/channel-list', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.send(channelSettingsData);
+    return res.send(channelSettingsData);
 }));
 app.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.send("Success");
+    return res.send('Express Typescript on Vercel');
 }));
 app.post('/message', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const apiUrl = "https://slack.com/api/chat.postMessage";
@@ -107,10 +107,10 @@ app.post('/message', (req, res) => __awaiter(void 0, void 0, void 0, function* (
         headers: { Authorization: `Bearer ${token}` },
     });
     if (messageResponse.data.ok) {
-        res.send('Notification send! Please check');
+        return res.send('Notification send! Please check');
     }
     else {
-        res.status(500).send(messageResponse.data.error);
+        return res.status(500).send(messageResponse.data.error);
     }
 }));
 test_routes.route(app);
