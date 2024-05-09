@@ -74,20 +74,20 @@ app.get("/auth/slack/callback", (req, res) => __awaiter(void 0, void 0, void 0, 
           </form>`);
             }
             else {
-                res
+                return res
                     .status(500)
                     .send("Error fetching channels: " + channelsResponse.data.error);
             }
         }
         else {
-            res
+            return res
                 .status(500)
                 .send("Error authorizing with Slack: " + tokenResponse.data.error);
         }
     }
     catch (error) {
         console.error(error);
-        res
+        return res
             .status(500)
             .send("Server error when exchanging code for token or fetching channels.");
     }
