@@ -4,6 +4,7 @@ import session from 'express-session';
 import axios from 'axios';
 import dotenv from "dotenv";
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import { Request, Response } from 'express';
 dotenv.config();
 
@@ -12,6 +13,7 @@ let token:string;
 const mongoUrl = 'mongodb+srv://vishnutrd11:qgZvua2xZigWKkcS@cluster0.lrkquyr.mongodb.net/Lucid_db?retryWrites=true&w=majority&appName=Cluster0'
 mongoose.connect(mongoUrl);
 const app = express();
+app.use(cors());
 declare module 'express-session' {
     interface SessionData {
       slack_access_token?: string;

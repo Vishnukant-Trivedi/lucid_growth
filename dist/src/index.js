@@ -18,12 +18,14 @@ const express_session_1 = __importDefault(require("express-session"));
 const axios_1 = __importDefault(require("axios"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const body_parser_1 = __importDefault(require("body-parser"));
+const cors_1 = __importDefault(require("cors"));
 dotenv_1.default.config();
 let channelSettingsData;
 let token;
 const mongoUrl = 'mongodb+srv://vishnutrd11:qgZvua2xZigWKkcS@cluster0.lrkquyr.mongodb.net/Lucid_db?retryWrites=true&w=majority&appName=Cluster0';
 mongoose_1.default.connect(mongoUrl);
 const app = (0, express_1.default)();
+app.use((0, cors_1.default)());
 app.use((0, express_session_1.default)({
     secret: process.env.SESSION_SECRET || 'default-secret',
     resave: false,
