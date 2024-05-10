@@ -13,7 +13,9 @@ let token:string;
 const mongoUrl = 'mongodb+srv://vishnutrd11:qgZvua2xZigWKkcS@cluster0.lrkquyr.mongodb.net/Lucid_db?retryWrites=true&w=majority&appName=Cluster0'
 mongoose.connect(mongoUrl);
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: 'https://slack-notification-six.vercel.app'
+}));
 declare module 'express-session' {
     interface SessionData {
       slack_access_token?: string;
