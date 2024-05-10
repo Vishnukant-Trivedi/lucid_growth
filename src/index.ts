@@ -111,7 +111,8 @@ app.get("/auth/slack", (req: Request, res: Response) => {
     }
   });
 app.get('/channel-list', async (req: Request, res: Response) => {
-  
+  res.setHeader('Access-Control-Allow-Origin', 'https://slack-notification-six.vercel.app');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
   return res.send(channelSettingsData);
 });
 
@@ -130,7 +131,8 @@ app.post('/message', async (req: Request, res: Response) => {
     {
     headers: { Authorization: `Bearer ${token}` },
   });
-  
+  res.setHeader('Access-Control-Allow-Origin', 'https://slack-notification-six.vercel.app');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
   if(messageResponse.data.ok){
      return res.send('Notification send! Please check');
   } else {
