@@ -26,7 +26,7 @@ const mongoUrl = 'mongodb+srv://vishnutrd11:qgZvua2xZigWKkcS@cluster0.lrkquyr.mo
 mongoose_1.default.connect(mongoUrl);
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({
-    origin: '*'
+    origin: 'https://slack-notification-six.vercel.app'
 }));
 app.use((0, express_session_1.default)({
     secret: process.env.SESSION_SECRET || 'default-secret',
@@ -101,11 +101,6 @@ app.get('/channel-list', (req, res) => __awaiter(void 0, void 0, void 0, functio
     return res.send(channelSettingsData);
 }));
 app.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Request-Method', 'GET');
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-    res.setHeader('Access-Control-Allow-Headers', ['Content-Type', 'Authorization']);
-    console.log(res);
     return res.send('Express Typescript on Render');
 }));
 app.post('/message', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
