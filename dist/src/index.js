@@ -95,7 +95,9 @@ app.get("/auth/slack/callback", (req, res) => __awaiter(void 0, void 0, void 0, 
 }));
 app.get('/channel-list', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.setHeader('Access-Control-Allow-Origin', 'https://slack-notification-six.vercel.app');
+    res.setHeader('Access-Control-Request-Method', 'GET');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     return res.send(channelSettingsData);
 }));
 app.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -110,6 +112,7 @@ app.post('/message', (req, res) => __awaiter(void 0, void 0, void 0, function* (
         headers: { Authorization: `Bearer ${token}` },
     });
     res.setHeader('Access-Control-Allow-Origin', 'https://slack-notification-six.vercel.app');
+    res.setHeader('Access-Control-Request-Method', 'POST');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     if (messageResponse.data.ok) {
         return res.send('Notification send! Please check');
