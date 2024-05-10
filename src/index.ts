@@ -114,13 +114,13 @@ app.get('/channel-list', async (req: Request, res: Response) => {
   res.setHeader('Access-Control-Allow-Origin', 'https://slack-notification-six.vercel.app');
   res.setHeader('Access-Control-Request-Method', 'GET');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Allow-Headers','Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Headers',['Content-Type', 'Authorization']);
   return res.send(channelSettingsData);
 });
 
 app.get('/', async (req: Request, res: Response) => {
   
-  return res.send('Express Typescript on Vercel')
+  return res.send('Express Typescript on Render')
 });
 
 app.post('/message', async (req: Request, res: Response) => {
@@ -136,6 +136,7 @@ app.post('/message', async (req: Request, res: Response) => {
   res.setHeader('Access-Control-Allow-Origin', 'https://slack-notification-six.vercel.app');
   res.setHeader('Access-Control-Request-Method', 'POST');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Headers',['Content-Type', 'Authorization']);
   if(messageResponse.data.ok){
      return res.send('Notification send! Please check');
   } else {
